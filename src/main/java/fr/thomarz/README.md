@@ -54,3 +54,25 @@ public class MyClient extends TClientSocket {
 
 
 <h1>Client Main</h1>
+
+```java
+public static void main(String[] args) {
+
+    // Create the client
+    MyClient myClient = new MyClient();
+
+    // Send a message to the server
+    myClient.sendMessage("Hey !");
+
+    // Send a message to the server and return the value that you has define in the server code
+    int usersAmount = myClient.getInt("OnlineUsers");
+    boolean newUser = myClient.getBoolean("NewUser");
+    String welcomeMessage = myClient.getString("WelcomeMessage");
+
+    // Send Message to client
+    System.out.println("There are " + usersAmount + " users on the server");
+    if (newUser) {
+        System.out.println(welcomeMessage);
+    }
+}
+```
