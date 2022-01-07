@@ -18,10 +18,7 @@ public class MyServer extends TServer {
             if (args.length == 1) {
                 System.out.println(client + " a envoyé le message " + args[0] + " !")
             }
-
         }
-
     }
-
 }
 ```
