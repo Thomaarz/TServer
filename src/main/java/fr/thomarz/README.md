@@ -43,6 +43,5 @@ public class MyClient extends TClientSocket {
             }
         }
     }
-    
 }
 ```
