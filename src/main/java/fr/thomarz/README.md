@@ -2,8 +2,7 @@
 <h1>Server Usage</h1>
 
 
-```
-
+```java
 public MyServer() {
     super(2222);
 }
