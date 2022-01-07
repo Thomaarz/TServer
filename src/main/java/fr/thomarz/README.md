@@ -1,8 +1,10 @@
 
 <h1>Server Usage</h1>
+
+
 ```
 
-public MyServer() {
+public void MyServer() {
     super(2222);
 }
 
