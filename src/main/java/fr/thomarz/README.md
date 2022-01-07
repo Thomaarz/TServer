@@ -2,7 +2,7 @@
 An easy java api to communicate between differents programs using sockets
 
 
-<h1>Server Usage</h1>
+<h1>Server Class</h1>
 
 
 ```java
@@ -26,7 +26,7 @@ public class MyServer extends TServerSocket {
 }
 ```
 
-<h1>Client Usage</h1>
+<h1>Client Class</h1>
 
 ```java
 public class MyClient extends TClientSocket {
@@ -48,3 +48,9 @@ public class MyClient extends TClientSocket {
     }
 }
 ```
+
+
+<h1>Server Main</h1>
+
+
+<h1>Client Main</h1>
