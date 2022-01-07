@@ -4,7 +4,7 @@
 
 ```
 
-public void MyServer() {
+public MyServer() {
     super(2222);
 }
 
