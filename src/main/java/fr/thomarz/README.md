@@ -22,3 +22,24 @@ public class MyServer extends TServerSocket {
     }
 }
 ```
+
+<h1>Client Usage</h1>
+
+```java
+public class MyClient extends TClientSocket {
+
+    public MyClient() {
+        super("Client 1", 2222);
+    }
+
+    @Override
+    public void onReceive(String message) {
+        Guild guild = LacraftiaMinecraft.getLacraftia();
+        if (guild == null) {
+            return;
+        }
+        
+    }
+    
+}
+```
