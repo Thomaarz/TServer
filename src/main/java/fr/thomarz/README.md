@@ -19,7 +19,7 @@ public class MyServer extends TServerSocket {
 
         if (channel.equalsIgnoreCase("Test")) {
             if (args.length == 1) {
-                System.out.println(client + " a envoyé le message " + args[0] + " !")
+                System.out.println(client + " a envoyé le message " + args[0] + " !");
             }
         }
     }
@@ -52,6 +52,21 @@ public class MyClient extends TClientSocket {
 
 <h1>Server Main</h1>
 
+```java
+public static void main(String[] args) {
+
+    // Create the server
+    MyServer myServer = new MyServer();
+
+    // Send a message to "Client 1"
+    myServer.sendMessage("Client 1", "Hello !");
+    myServer.sendMessage("Client 1", 1);
+    myServer.sendMessage("Client 1", true);
+
+    // Send a message to ALL clients (ALL can be replaced by "*")
+    myServer.sendMessage("ALL", "Hello everyone !");
+}
+```
 
 <h1>Client Main</h1>
 
