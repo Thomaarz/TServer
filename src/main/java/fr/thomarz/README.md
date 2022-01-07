@@ -3,20 +3,24 @@
 
 
 ```java
-public MyServer() {
-    super(2222);
-}
+public class MyServer extends TServer {
 
-@Override
-public void onReceive(String client, String message) {
-    String channel = LCClientSocket.getChannel(message);
-    String[] args = LCClientSocket.getArgs(message);
+    public MyServer() {
+        super(2222);
+    }
 
-    if (channel.equalsIgnoredCas("Test")) {
-        if (args.length == 1) {
-            System.out.println(client + " a envoyé le message " + args[0] + " !")
+    @Override
+    public void onReceive(String client, String message) {
+        String channel = LCClientSocket.getChannel(message);
+        String[] args = LCClientSocket.getArgs(message);
+
+        if (channel.equalsIgnoredCas("Test")) {
+            if (args.length == 1) {
+                System.out.println(client + " a envoyé le message " + args[0] + " !")
+            }
+
         }
-        
+
     }
 
 }
