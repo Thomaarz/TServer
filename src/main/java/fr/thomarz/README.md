@@ -14,7 +14,7 @@ public class MyServer extends TServerSocket {
         String channel = TClientSocket.getChannel(message);
         String[] args = TClientSocket.getArgs(message);
 
-        if (channel.equalsIgnoredCas("Test")) {
+        if (channel.equalsIgnoreCase("Test")) {
             if (args.length == 1) {
                 System.out.println(client + " a envoyé le message " + args[0] + " !")
             }
@@ -34,11 +34,14 @@ public class MyClient extends TClientSocket {
 
     @Override
     public void onReceive(String message) {
-        Guild guild = LacraftiaMinecraft.getLacraftia();
-        if (guild == null) {
-            return;
-        }
+        String channel = getChannel(message);
+        String[] args = getArgs(message);
         
+        if (channel.equalsIgnoreCase("Test")) {
+            if (args.length == 1) {
+                System.out.println("Le serveur vous a envoyé " + args[0]);
+            }
+        }
     }
     
 }
