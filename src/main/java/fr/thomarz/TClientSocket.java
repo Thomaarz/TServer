@@ -69,7 +69,7 @@ public abstract class TClientSocket {
                                 break;
                             }
                             onReceive(message);
-                            System.out.println("Server -> " + message);
+                            System.out.println("Receive message from server: " + message);
                         } catch (Exception e) {
                             break;
                         }
@@ -122,7 +122,7 @@ public abstract class TClientSocket {
         try {
             String response = getReader().readLine();
             getReader().close();
-            System.out.println("Server -> " + getName() + ": " + response);
+            System.out.println("Receive response: " + response + ", from server for message: " + message);
             try {
                 return Integer.parseInt(response);
             } catch (Exception e1) {

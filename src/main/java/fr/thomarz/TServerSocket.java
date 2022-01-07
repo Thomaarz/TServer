@@ -51,7 +51,19 @@ public abstract class TServerSocket {
 
     public void sendMessage(String client, String message) {
         if (client.equalsIgnoreCase("*") || client.equalsIgnoreCase("ALL")) {
+            for (Socket socket : clients.values()) {
+                if (socket == null) {
+                    continue;
+                }
+                try {
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
+                    writer.write(message);
+                    writer.newLine();
+                    writer.flush();
+                } catch (IOException ignored) {
 
+                }
+            }
         } else {
             Socket socket = clients.get(client);
             if (socket == null) {
@@ -75,8 +87,8 @@ public abstract class TServerSocket {
 
             final String clientName = reader.readLine();
             clients.put(clientName, client);
-            System.out.println(clientName + " -> Connect");
-            sendMessage(clientName, clientName + " -> " + name);
+            System.out.println(clientName + " has connected");
+            sendMessage(clientName, "connect to " + name);
 
             new Thread(new Runnable() {
                 @Override
@@ -85,27 +97,27 @@ public abstract class TServerSocket {
                         try {
                             String message = reader.readLine();
                             if (message == null) {
-                                System.out.println(clientName + " -> Disconnect #0");
+                                System.out.println(clientName + " has disconnected");
                                 clients.remove(clientName);
                                 break;
                             }
-                            System.out.println(clientName + " -> " + message);
+                            System.out.println(clientName + " send message:" + message);
                             onReceive(clientName, message);
 
                             if (clientName.endsWith("Copy")) {
-                                System.out.println(clientName + " -> Disconnect #1");
+                                System.out.println(clientName + " has disconnected");
                                 clients.remove(clientName);
                                 break;
                             }
 
                             if (message.equals("Disconnect")) {
-                                System.out.println(clientName + " -> Disconnect #2");
+                                System.out.println(clientName + " has disconnected");
                                 clients.remove(clientName);
                                 reader.close();
                                 break;
                             }
                         } catch (Exception e) {
-                            System.out.println(clientName + " -> Disconnect #3");
+                            System.out.println(clientName + " has disconnected");
                             clients.remove(clientName);
                             break;
                         }
