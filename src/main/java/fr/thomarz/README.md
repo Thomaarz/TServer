@@ -3,7 +3,7 @@
 
 
 ```java
-public class MyServer extends TServer {
+public class MyServer extends TServerSocket {
 
     public MyServer() {
         super(2222);
@@ -11,8 +11,8 @@ public class MyServer extends TServer {
 
     @Override
     public void onReceive(String client, String message) {
-        String channel = LCClientSocket.getChannel(message);
-        String[] args = LCClientSocket.getArgs(message);
+        String channel = TClientSocket.getChannel(message);
+        String[] args = TClientSocket.getArgs(message);
 
         if (channel.equalsIgnoredCas("Test")) {
             if (args.length == 1) {
