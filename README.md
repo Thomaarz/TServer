@@ -80,7 +80,7 @@ public static void main(String[] args) {
     // Send a message to the server
     myClient.sendMessage("Hey !");
 
-    // Send a message to the server and return the value that you has define in the server code
+    // Send a message to the server and return the value that you has define in the server code (You have to define the value in the server class)
     int usersAmount = myClient.getInt("OnlineUsers");
     boolean newUser = myClient.getBoolean("NewUser");
     String welcomeMessage = myClient.getString("WelcomeMessage");
