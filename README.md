@@ -30,7 +30,7 @@ public class MyServer extends TServerSocket {
 <h1>Client Class</h1>
 
 ```java
-public class MyClient extends TClientSocket {
+public class MyClient extends TClientSocket { 
 
     public MyClient() {
         super("Client 1", 2222);
