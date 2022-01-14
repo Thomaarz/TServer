@@ -1,6 +1,6 @@
 <h1>TServer</h1>
 An easy java api to communicate between differents programs using sockets.
-Required org.projectlombok and commons-io dependency.
+Required org.projectlombok and commons-io dependency .
 
 
 <h1>Server Class</h1>
