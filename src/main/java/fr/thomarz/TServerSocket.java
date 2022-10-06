@@ -25,6 +25,7 @@ public abstract class TServerSocket {
             serverSocket = new ServerSocket(port, 50, ip);
             System.out.println(name + " Connecté");
         } catch (IOException e) {
+            onStop();
             e.printStackTrace();
         }
         launch();
@@ -39,6 +40,7 @@ public abstract class TServerSocket {
                         Socket client = serverSocket.accept();
                         runClient(client);
                     } catch (IOException e) {
+                        onStop();
                         e.printStackTrace();
                     }
                 }
@@ -67,17 +69,21 @@ public abstract class TServerSocket {
             }
         } else {
             Socket socket = clients.get(client);
-            if (socket == null) {
-                return;
-            }
-            try {
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
-                writer.write(message);
-                writer.newLine();
-                writer.flush();
-            } catch (IOException ignored) {
+            sendMessage(socket, message);
+        }
+    }
 
-            }
+    public void sendMessage(Socket socket, String message) {
+        if (socket == null) {
+            return;
+        }
+        try {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
+            writer.write(message);
+            writer.newLine();
+            writer.flush();
+        } catch (IOException ignored) {
+
         }
     }
 
@@ -86,8 +92,16 @@ public abstract class TServerSocket {
             final BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream(), StandardCharsets.UTF_8));
 
             final String clientName = reader.readLine();
+            if (clients.containsKey(clientName)) {
+                sendMessage(client, "Leave Ce pseudo est déjà utilisé.");
+                return;
+            }
+            if (clientName.length() < 3) {
+                sendMessage(client, "Leave Pseudo trop court.");
+                return;
+            }
             clients.put(clientName, client);
-            System.out.println(clientName + " has connected");
+            onJoin(clientName, client);
             sendMessage(clientName, "Connect " + name);
 
             new Thread(new Runnable() {
@@ -97,18 +111,17 @@ public abstract class TServerSocket {
                         try {
                             String message = reader.readLine();
 
+                            if (message == null) {
+                                onQuit(clientName);
+                                clients.remove(clientName);
+                                break;
+                            }
+
                             System.out.println(clientName + " send message:" + message);
                             onReceive(clientName, message);
 
-                            if (message.equals("Disconnect")) {
-                                System.out.println(clientName + " has disconnected");
-                                clients.remove(clientName);
-                                reader.close();
-                                client.close();
-                                break;
-                            }
                         } catch (Exception e) {
-                            System.out.println(clientName + " has disconnected");
+                            onQuit(clientName);
                             clients.remove(clientName);
                             break;
                         }
@@ -121,8 +134,6 @@ public abstract class TServerSocket {
         }
     }
 
-    public abstract void onReceive(String client, String message);
-
     public void close() {
         try {
             serverSocket.close();
@@ -130,4 +141,17 @@ public abstract class TServerSocket {
 
         }
     }
+
+    public abstract void onReceive(String client, String message);
+
+    public void onJoin(String clientName, Socket client) {
+        System.out.println(clientName + " has connected");
+    }
+
+    public void onQuit(String clientName) {
+        System.out.println(clientName + " has disconnected");
+        clients.remove(clientName);
+    }
+
+    public void onStop() {}
 }

@@ -70,6 +70,7 @@ public abstract class TClientSocket {
                         }
                     } catch (Exception e) {
                         System.out.println("Disconnected from server.");
+                        onDisconnect();
                         break;
                     }
                 }
@@ -100,9 +101,12 @@ public abstract class TClientSocket {
 
     public abstract void onReceive(String message);
 
+    public void onDisconnect() {}
+
     public void disconnect() {
         try {
             socket.close();
+            onDisconnect();
         } catch (IOException e) {
 
         }
