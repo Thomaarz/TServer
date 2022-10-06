@@ -67,7 +67,6 @@ public abstract class TClientSocket {
                         if (message != null) {
                             onReceive(message);
                             System.out.println("Receive message from server: " + message);
-                            break;
                         }
                     } catch (Exception e) {
                         System.out.println("Disconnected from server.");
