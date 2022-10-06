@@ -1,6 +1,6 @@
 <h1>TServer</h1>
 An easy java api to communicate between differents programs using sockets.
-Required org.projectlombok and commons-io dependency.
+Required org.projectlombok and commons-io dependency .
 
 
 <h1>Server Class</h1>
@@ -30,7 +30,7 @@ public class MyServer extends TServerSocket {
 <h1>Client Class</h1>
 
 ```java
-public class MyClient extends TClientSocket {
+public class MyClient extends TClientSocket { 
 
     public MyClient() {
         super("Client 1", 2222);
@@ -80,7 +80,7 @@ public static void main(String[] args) {
     // Send a message to the server
     myClient.sendMessage("Hey !");
 
-    // Send a message to the server and return the value that you has define in the server code
+    // Send a message to the server and return the value that you has define in the server code (You have to define the value in the server class)
     int usersAmount = myClient.getInt("OnlineUsers");
     boolean newUser = myClient.getBoolean("NewUser");
     String welcomeMessage = myClient.getString("WelcomeMessage");
