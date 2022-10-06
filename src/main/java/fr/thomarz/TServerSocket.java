@@ -101,8 +101,7 @@ public abstract class TServerSocket {
                 return;
             }
             clients.put(clientName, client);
-            onJoin(clientName, client);
-            sendMessage(clientName, "Connect " + name);
+            onJoin(clientName);
 
             new Thread(new Runnable() {
                 @Override
@@ -117,7 +116,7 @@ public abstract class TServerSocket {
                                 break;
                             }
 
-                            System.out.println(clientName + " send message:" + message);
+                            System.out.println(clientName + ": " + message);
                             onReceive(clientName, message);
 
                         } catch (Exception e) {
@@ -144,12 +143,12 @@ public abstract class TServerSocket {
 
     public abstract void onReceive(String client, String message);
 
-    public void onJoin(String clientName, Socket client) {
-        System.out.println(clientName + " has connected");
+    public void onJoin(String clientName) {
+        System.out.println(clientName + " Connected");
     }
 
     public void onQuit(String clientName) {
-        System.out.println(clientName + " has disconnected");
+        System.out.println(clientName + " Disconnected");
         clients.remove(clientName);
     }
 

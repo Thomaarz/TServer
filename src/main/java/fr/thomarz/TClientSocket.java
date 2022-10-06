@@ -66,10 +66,10 @@ public abstract class TClientSocket {
                         String message = reader.readLine();
                         if (message != null) {
                             onReceive(message);
-                            System.out.println("Receive message from server: " + message);
+                            System.out.println("Server: " + message);
                         }
                     } catch (Exception e) {
-                        System.out.println("Disconnected from server.");
+                        System.out.println("Disconnected");
                         onDisconnect();
                         break;
                     }
