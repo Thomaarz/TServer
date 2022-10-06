@@ -3,6 +3,7 @@ package fr.thomarz;
 import lombok.Getter;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -18,10 +19,10 @@ public abstract class TServerSocket {
     public int port;
     private ServerSocket serverSocket;
 
-    public TServerSocket(int port) {
-        this.name = "LC Server";
+    public TServerSocket(String name, int port, InetAddress ip) {
+        this.name = name;
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(port, 50, ip);
             System.out.println(name + " Connecté");
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,10 +81,9 @@ public abstract class TServerSocket {
         }
     }
 
-    private void runClient(Socket client) {
+    private void runClient(final Socket client) {
         try {
             final BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream(), StandardCharsets.UTF_8));
-            final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(), StandardCharsets.UTF_8));
 
             final String clientName = reader.readLine();
             clients.put(clientName, client);
@@ -96,24 +96,15 @@ public abstract class TServerSocket {
                     while (true) {
                         try {
                             String message = reader.readLine();
-                            if (message == null) {
-                                System.out.println(clientName + " has disconnected");
-                                clients.remove(clientName);
-                                break;
-                            }
+
                             System.out.println(clientName + " send message:" + message);
                             onReceive(clientName, message);
-
-                            if (clientName.endsWith("Copy")) {
-                                System.out.println(clientName + " has disconnected");
-                                clients.remove(clientName);
-                                break;
-                            }
 
                             if (message.equals("Disconnect")) {
                                 System.out.println(clientName + " has disconnected");
                                 clients.remove(clientName);
                                 reader.close();
+                                client.close();
                                 break;
                             }
                         } catch (Exception e) {
@@ -131,4 +122,12 @@ public abstract class TServerSocket {
     }
 
     public abstract void onReceive(String client, String message);
+
+    public void close() {
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+
+        }
+    }
 }
