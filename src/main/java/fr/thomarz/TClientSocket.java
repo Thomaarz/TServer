@@ -58,13 +58,6 @@ public abstract class TClientSocket {
     private void connect() {
         sendMessage(getName());
 
-        try {
-            String message = reader.readLine();
-            System.out.println(message);
-        } catch (IOException e) {
-
-        }
-
         new Thread(new Runnable() {
             @Override
             public void run() {
