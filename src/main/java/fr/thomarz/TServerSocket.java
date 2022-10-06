@@ -88,7 +88,7 @@ public abstract class TServerSocket {
             final String clientName = reader.readLine();
             clients.put(clientName, client);
             System.out.println(clientName + " has connected");
-            sendMessage(clientName, "connect to " + name);
+            sendMessage(clientName, "Connect " + name);
 
             new Thread(new Runnable() {
                 @Override
