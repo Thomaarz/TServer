@@ -24,7 +24,7 @@ public abstract class TClientSocket {
         this(name, port, InetAddress.getByName("127.0.0.1"));
     }
 
-    public TClientSocket(String name, int port, InetAddress server) {
+    public TClientSocket(String name, int port, InetAddress server) throws UnknownHostException {
         this.name = name;
         this.port = port;
         this.server = server;
@@ -36,7 +36,7 @@ public abstract class TClientSocket {
 
             connect();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new UnknownHostException();
         }
     }
 

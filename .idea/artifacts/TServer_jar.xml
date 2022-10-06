@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="TServer:jar">
-    <output-path>$PROJECT_DIR$/../../../../Liva/Organization</output-path>
+    <output-path>$USER_HOME$/Desktop</output-path>
     <root id="archive" name="TServer.jar">
       <element id="module-output" name="TServer" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-io/commons-io/2.5/commons-io-2.5.jar" path-in-jar="/" />
